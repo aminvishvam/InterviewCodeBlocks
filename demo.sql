@@ -52,6 +52,26 @@ SELECT name, dept_id, salary,
        RANK() OVER(PARTITION BY dept_id ORDER BY salary DESC) as dept_rank
 FROM Employees;
 
+
+-- Explanation
+-- WITH RECURSIVE: Defines a recursive Common Table Expression named fib with two columns:
+
+-- n: Position in the Fibonacci sequence
+-- val: Value of the Fibonacci number at position n
+-- Base case: SELECT 1, 1 provides the starting point where:
+
+-- First "1" represents position (n=1)
+-- Second "1" represents the value of F(1)=1
+-- Recursive part:
+
+-- SELECT n+1, val + (SELECT val FROM fib WHERE n = fib.n - 1)
+-- For each row, generates the next row where:
+-- n+1 increments the position counter
+-- val + (SELECT val FROM fib WHERE n = fib.n - 1) adds the current Fibonacci value to the previous one
+-- Termination condition: WHERE n < 10 stops the recursion when n reaches 10
+
+-- Final query: SELECT * FROM fib returns all calculated Fibonacci numbers
+
 WITH RECURSIVE fib(n, val) AS (
   SELECT 1, 1
   UNION ALL
