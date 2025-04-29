@@ -43,6 +43,20 @@ BEGIN
 
 END
 
+-- Window Function Explanation
+-- RANK() - Assigns a unique rank to rows within a partition, with gaps in the sequence when there are ties
+-- PARTITION BY dept_id - Groups the data by department ID, creating separate "windows" for each department
+-- ORDER BY salary DESC - Within each department, ranks employees from highest to lowest salary
+
 SELECT name, dept_id, salary,
        RANK() OVER(PARTITION BY dept_id ORDER BY salary DESC) as dept_rank
 FROM Employees;
+
+WITH RECURSIVE fib(n, val) AS (
+  SELECT 1, 1
+  UNION ALL
+  SELECT n+1, val + (SELECT val FROM fib WHERE n = fib.n - 1)
+  FROM fib
+  WHERE n < 10
+)
+SELECT * FROM fib;
