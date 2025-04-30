@@ -80,3 +80,14 @@ WITH RECURSIVE fib(n, val) AS (
   WHERE n < 10
 )
 SELECT * FROM fib;
+
+-- Recursive CTE for organizational hierarchy
+
+WITH RECURSIVE org AS (
+  SELECT id, name, manager_id FROM employees WHERE manager_id IS NULL
+  UNION ALL
+  SELECT e.id, e.name, e.manager_id
+  FROM employees e
+  JOIN org o ON e.manager_id = o.id
+)
+SELECT * FROM org;
